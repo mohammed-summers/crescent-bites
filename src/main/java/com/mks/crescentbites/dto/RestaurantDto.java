@@ -2,6 +2,8 @@ package com.mks.crescentbites.dto;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 public class RestaurantDto {
     private String name;
@@ -11,5 +13,8 @@ public class RestaurantDto {
     private String state;
     private String zipCode;
     private String cuisineType;
+    private int ownerId;
     private String menuImageUrl;
+    private Timestamp created_at;
+    private Timestamp updated_at;
 }
