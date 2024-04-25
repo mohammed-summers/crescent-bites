@@ -5,6 +5,7 @@ import com.mks.crescentbites.entity.Restaurant;
 import com.mks.crescentbites.exception.ResourceExists;
 import com.mks.crescentbites.exception.ResourceNotFoundException;
 import com.mks.crescentbites.repository.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -13,7 +14,8 @@ import java.util.List;
 
 
 @Service
-public class RestaurantServiceImpl implements RestaurantService{
+@Transactional
+public class RestaurantServiceImpl implements RestaurantService {
     RestaurantRepository restaurantRepository;
 
     public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
@@ -47,6 +49,16 @@ public class RestaurantServiceImpl implements RestaurantService{
         restaurantDto.setCreated_at(Timestamp.from(Instant.now()));
         restaurantRepository.save(convertToEntity(restaurantDto));
         return "Restaurant has been added!!";
+    }
+
+    @Override
+    public String deleteRestaurant(String restaurantName) {
+        Restaurant restaurantByName = restaurantRepository.findRestaurantByName(restaurantName);
+        if (restaurantByName == null) {
+            throw new ResourceNotFoundException("restaurant", "id", restaurantName);
+        }
+        restaurantRepository.deleteByName(restaurantName);
+        return "Restaurant has been removed";
     }
 
 

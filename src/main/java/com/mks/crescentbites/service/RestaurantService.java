@@ -10,5 +10,6 @@ public interface RestaurantService {
     List<RestaurantDto> getAllRestaurants();
     public RestaurantDto getRestaurantByName(String restaurantName);
     String addRestaurant(RestaurantDto restaurantDto);
+    String deleteRestaurant(String restaurantName);
 
 }

@@ -9,7 +9,7 @@ public class RestaurantDto {
     private String name;
     private String description;
     private String address;
-    private String city;;
+    private String city;
     private String state;
     private String zipCode;
     private String cuisineType;

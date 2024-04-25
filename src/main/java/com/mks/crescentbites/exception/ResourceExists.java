@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(value = HttpStatus.ALREADY_REPORTED)
-public class ResourceExists extends RuntimeException{
+public class ResourceExists extends RuntimeException {
     private final String resourceName;
 
     public ResourceExists(String resourceName) {

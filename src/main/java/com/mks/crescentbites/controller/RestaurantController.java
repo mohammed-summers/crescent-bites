@@ -19,20 +19,26 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurants")
-    public ResponseEntity<RestaurantDto> getAllRestaurant(){
+    public ResponseEntity<List<RestaurantDto>> getAllRestaurant() {
         List<RestaurantDto> restaurantDtoList = restaurantService.getAllRestaurants();
-        return new ResponseEntity(restaurantDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(restaurantDtoList, HttpStatus.OK);
     }
 
     @GetMapping("/restaurant/{name}")
     public ResponseEntity<RestaurantDto> getRestaurantByName(@PathVariable("name") String restaurantName) {
         RestaurantDto restaurantByName = restaurantService.getRestaurantByName(restaurantName);
-        return new ResponseEntity(restaurantByName, HttpStatus.OK);
+        return new ResponseEntity<>(restaurantByName, HttpStatus.OK);
     }
 
     @PostMapping("/restaurants")
     public ResponseEntity<String> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
         String response = restaurantService.addRestaurant(restaurantDto);
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/restaurant/{name}")
+    public ResponseEntity<String> deleteRestaurant(@PathVariable("name") String restaurantName) {
+        String response = restaurantService.deleteRestaurant(restaurantName);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

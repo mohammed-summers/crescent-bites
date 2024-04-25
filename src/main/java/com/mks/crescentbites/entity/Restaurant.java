@@ -19,7 +19,8 @@ public class Restaurant {
     private String name;
     private String description;
     private String address;
-    private String city;;
+    private String city;
+
     private String state;
 
     @Column(name = "zip_code")
