@@ -36,6 +36,12 @@ public class RestaurantController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PutMapping("/restaurant/{name}")
+    public ResponseEntity<String> updateRestaurant(@RequestBody RestaurantDto restaurantDto){
+        String response = restaurantService.updateRestaurant(restaurantDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping("/restaurant/{name}")
     public ResponseEntity<String> deleteRestaurant(@PathVariable("name") String restaurantName) {
         String response = restaurantService.deleteRestaurant(restaurantName);

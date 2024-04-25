@@ -52,9 +52,21 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public String updateRestaurant(RestaurantDto restaurantDto) {
+        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantDto.getName());
+        if (retrievedRestaurant == null) {
+            throw new ResourceNotFoundException("restaurant", "id", restaurantDto.getName());
+        }
+        retrievedRestaurant.setDescription(restaurantDto.getDescription());
+        retrievedRestaurant.setMenuImageUrl(restaurantDto.getMenuImageUrl());
+        restaurantRepository.save(retrievedRestaurant);
+        return "Restaurant has been updated";
+    }
+
+    @Override
     public String deleteRestaurant(String restaurantName) {
-        Restaurant restaurantByName = restaurantRepository.findRestaurantByName(restaurantName);
-        if (restaurantByName == null) {
+        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantName);
+        if (retrievedRestaurant == null) {
             throw new ResourceNotFoundException("restaurant", "id", restaurantName);
         }
         restaurantRepository.deleteByName(restaurantName);
@@ -90,6 +102,4 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setCreated_at(restaurantDto.getCreated_at());
         return restaurant;
     }
-
-
 }

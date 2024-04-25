@@ -8,8 +8,9 @@ import java.util.List;
 @Service
 public interface RestaurantService {
     List<RestaurantDto> getAllRestaurants();
-    public RestaurantDto getRestaurantByName(String restaurantName);
+    RestaurantDto getRestaurantByName(String restaurantName);
     String addRestaurant(RestaurantDto restaurantDto);
+    String updateRestaurant(RestaurantDto restaurantDto);
     String deleteRestaurant(String restaurantName);
 
 }
