@@ -12,5 +12,4 @@ public interface RestaurantService {
     String addRestaurant(RestaurantDto restaurantDto);
     String updateRestaurant(RestaurantDto restaurantDto);
     String deleteRestaurant(String restaurantName);
-
 }

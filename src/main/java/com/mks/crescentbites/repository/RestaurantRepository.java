@@ -4,9 +4,9 @@ import com.mks.crescentbites.entity.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
-    Restaurant findRestaurantByName(String name);
-
-    void deleteByName(String name);
+    Optional<Restaurant> findRestaurantByName(String name);
 }

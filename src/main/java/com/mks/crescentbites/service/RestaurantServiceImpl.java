@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -22,28 +23,25 @@ public class RestaurantServiceImpl implements RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-
     @Override
     public List<RestaurantDto> getAllRestaurants() {
         List<Restaurant> restaurantList = restaurantRepository.findAll();
         return restaurantList.stream().map(restaurant -> convertToDto(restaurant)).toList();
     }
 
-
     @Override
     public RestaurantDto getRestaurantByName(String restaurantName) {
-        Restaurant restaurantByName = restaurantRepository.findRestaurantByName(restaurantName);
-        if (restaurantByName == null) {
-            throw new ResourceNotFoundException("restaurant", "id", restaurantName);
-        }
-        return convertToDto(restaurantByName);
+        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantName).orElseThrow(() ->
+                new ResourceNotFoundException("restaurant", "id", restaurantName));
+        return convertToDto(retrievedRestaurant);
     }
 
+    //TODO: ensure that you can add multiple restaurants with same name
     @Override
     public String addRestaurant(RestaurantDto restaurantDto) {
         Restaurant restaurant = convertToEntity(restaurantDto);
-        Restaurant restaurantByName = restaurantRepository.findRestaurantByName(restaurant.getName());
-        if (restaurantByName != null) {
+        Optional<Restaurant> restaurantByName = restaurantRepository.findRestaurantByName(restaurant.getName());
+        if (restaurantByName.isPresent()) {
             throw new ResourceExists(restaurantDto.getName());
         }
         restaurantDto.setCreated_at(Timestamp.from(Instant.now()));
@@ -53,10 +51,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public String updateRestaurant(RestaurantDto restaurantDto) {
-        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantDto.getName());
-        if (retrievedRestaurant == null) {
-            throw new ResourceNotFoundException("restaurant", "id", restaurantDto.getName());
-        }
+        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantDto.getName()).orElseThrow(() ->
+                new ResourceNotFoundException("restaurant", "id", restaurantDto.getName()));
+
         retrievedRestaurant.setDescription(restaurantDto.getDescription());
         retrievedRestaurant.setMenuImageUrl(restaurantDto.getMenuImageUrl());
         restaurantRepository.save(retrievedRestaurant);
@@ -65,11 +62,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public String deleteRestaurant(String restaurantName) {
-        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantName);
-        if (retrievedRestaurant == null) {
-            throw new ResourceNotFoundException("restaurant", "id", restaurantName);
-        }
-        restaurantRepository.deleteByName(restaurantName);
+        Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantName).orElseThrow(() ->
+                new ResourceNotFoundException("restaurant", "id", restaurantName));
+        restaurantRepository.delete(retrievedRestaurant);
         return "Restaurant has been removed";
     }
 
