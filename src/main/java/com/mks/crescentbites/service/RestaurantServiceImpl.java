@@ -7,6 +7,8 @@ import com.mks.crescentbites.exception.ResourceNotFoundException;
 import com.mks.crescentbites.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 
@@ -42,6 +44,7 @@ public class RestaurantServiceImpl implements RestaurantService{
         if (restaurantByName != null) {
             throw new ResourceExists(restaurantDto.getName());
         }
+        restaurantDto.setCreated_at(Timestamp.from(Instant.now()));
         restaurantRepository.save(convertToEntity(restaurantDto));
         return "Restaurant has been added!!";
     }
@@ -72,6 +75,7 @@ public class RestaurantServiceImpl implements RestaurantService{
         restaurant.setCuisineType(restaurantDto.getCuisineType());
         restaurant.setOwnerId(restaurantDto.getOwnerId());
         restaurant.setMenuImageUrl(restaurantDto.getMenuImageUrl());
+        restaurant.setCreated_at(restaurantDto.getCreated_at());
         return restaurant;
     }
 

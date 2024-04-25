@@ -31,7 +31,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurants")
-    public ResponseEntity<String> getRestaurantByName(@RequestBody RestaurantDto restaurantDto) {
+    public ResponseEntity<String> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
         String response = restaurantService.addRestaurant(restaurantDto);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
