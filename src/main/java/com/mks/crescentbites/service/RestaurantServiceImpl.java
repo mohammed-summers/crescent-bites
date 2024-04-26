@@ -2,7 +2,7 @@ package com.mks.crescentbites.service;
 
 import com.mks.crescentbites.dto.RestaurantDto;
 import com.mks.crescentbites.entity.Restaurant;
-import com.mks.crescentbites.exception.ResourceExists;
+import com.mks.crescentbites.exception.ResourceAlreadyExistsException;
 import com.mks.crescentbites.exception.ResourceNotFoundException;
 import com.mks.crescentbites.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
@@ -42,7 +42,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant restaurant = convertToEntity(restaurantDto);
         Optional<Restaurant> restaurantByName = restaurantRepository.findRestaurantByName(restaurant.getName());
         if (restaurantByName.isPresent()) {
-            throw new ResourceExists(restaurantDto.getName());
+            throw new ResourceAlreadyExistsException(restaurantDto.getName());
         }
         restaurantDto.setCreated_at(Timestamp.from(Instant.now()));
         restaurantRepository.save(convertToEntity(restaurantDto));
