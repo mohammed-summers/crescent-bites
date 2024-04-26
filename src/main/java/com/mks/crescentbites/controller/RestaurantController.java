@@ -3,6 +3,7 @@ package com.mks.crescentbites.controller;
 import com.mks.crescentbites.dto.RestaurantDto;
 import com.mks.crescentbites.service.RestaurantService;
 import com.mks.crescentbites.service.RestaurantServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,13 @@ public class RestaurantController {
     }
 
     @PostMapping("/restaurants")
-    public ResponseEntity<String> addRestaurant(@RequestBody RestaurantDto restaurantDto) {
+    public ResponseEntity<String> addRestaurant(@Valid @RequestBody RestaurantDto restaurantDto) {
         String response = restaurantService.addRestaurant(restaurantDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/restaurant/{name}")
-    public ResponseEntity<String> updateRestaurant(@RequestBody RestaurantDto restaurantDto){
+    public ResponseEntity<String> updateRestaurant(@Valid @RequestBody RestaurantDto restaurantDto){
         String response = restaurantService.updateRestaurant(restaurantDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
