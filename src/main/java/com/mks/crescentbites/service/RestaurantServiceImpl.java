@@ -32,7 +32,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public RestaurantDto getRestaurantByName(String restaurantName) {
         Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantName).orElseThrow(() ->
-                new ResourceNotFoundException("restaurant", "id", restaurantName));
+                new ResourceNotFoundException("restaurant", "name", restaurantName));
         return convertToDto(retrievedRestaurant);
     }
 
@@ -70,16 +70,17 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 
     private RestaurantDto convertToDto(Restaurant restaurant) {
-        RestaurantDto restaurantDto = new RestaurantDto();
-        restaurantDto.setName(restaurant.getName());
-        restaurantDto.setDescription(restaurant.getDescription());
-        restaurantDto.setAddress(restaurant.getAddress());
-        restaurantDto.setCity(restaurant.getCity());
-        restaurantDto.setState(restaurant.getState());
-        restaurantDto.setZipCode(restaurant.getZipCode());
-        restaurantDto.setCuisineType(restaurant.getCuisineType());
-        restaurantDto.setMenuImageUrl(restaurant.getMenuImageUrl());
-        return restaurantDto;
+        return RestaurantDto.builder()
+                .name(restaurant.getName())
+                .description(restaurant.getDescription())
+                .address(restaurant.getAddress())
+                .city(restaurant.getCity())
+                .state(restaurant.getState())
+                .zipCode(restaurant.getZipCode())
+                .cuisineType(restaurant.getCuisineType())
+                .menuImageUrl(restaurant.getMenuImageUrl())
+                .created_at(restaurant.getCreated_at())
+                .build();
     }
 
 
