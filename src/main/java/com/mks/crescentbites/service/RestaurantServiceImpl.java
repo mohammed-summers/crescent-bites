@@ -26,7 +26,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<RestaurantDto> getAllRestaurants() {
         List<Restaurant> restaurantList = restaurantRepository.findAll();
-        return restaurantList.stream().map(restaurant -> convertToDto(restaurant)).toList();
+        return restaurantList.stream().map(this::convertToDto).toList();
     }
 
     @Override
@@ -44,8 +44,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         if (restaurantByName.isPresent()) {
             throw new ResourceAlreadyExistsException(restaurantDto.getName());
         }
-        restaurantDto.setCreated_at(Timestamp.from(Instant.now()));
-        restaurantRepository.save(convertToEntity(restaurantDto));
+        restaurant.setCreated_at(Timestamp.from(Instant.now()));
+        restaurantRepository.save(restaurant);
         return "Restaurant has been added!!";
     }
 
@@ -56,6 +56,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         retrievedRestaurant.setDescription(restaurantDto.getDescription());
         retrievedRestaurant.setMenuImageUrl(restaurantDto.getMenuImageUrl());
+        retrievedRestaurant.setUpdated_at(Timestamp.from(Instant.now()));
         restaurantRepository.save(retrievedRestaurant);
         return "Restaurant has been updated";
     }
@@ -65,7 +66,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant retrievedRestaurant = restaurantRepository.findRestaurantByName(restaurantName).orElseThrow(() ->
                 new ResourceNotFoundException("restaurant", "id", restaurantName));
         restaurantRepository.delete(retrievedRestaurant);
-        return "Restaurant has been removed";
+        return "Restaurant has been removed!!";
     }
 
 
@@ -78,24 +79,27 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .state(restaurant.getState())
                 .zipCode(restaurant.getZipCode())
                 .cuisineType(restaurant.getCuisineType())
+                .ownerId(restaurant.getOwnerId())
                 .menuImageUrl(restaurant.getMenuImageUrl())
                 .created_at(restaurant.getCreated_at())
+                .updated_at(restaurant.getUpdated_at())
                 .build();
     }
 
 
     private Restaurant convertToEntity(RestaurantDto restaurantDto) {
-        Restaurant restaurant = new Restaurant();
-        restaurant.setName(restaurantDto.getName());
-        restaurant.setDescription(restaurantDto.getDescription());
-        restaurant.setAddress(restaurantDto.getAddress());
-        restaurant.setCity(restaurantDto.getCity());
-        restaurant.setState(restaurantDto.getState());
-        restaurant.setZipCode(restaurantDto.getZipCode());
-        restaurant.setCuisineType(restaurantDto.getCuisineType());
-        restaurant.setOwnerId(restaurantDto.getOwnerId());
-        restaurant.setMenuImageUrl(restaurantDto.getMenuImageUrl());
-        restaurant.setCreated_at(restaurantDto.getCreated_at());
-        return restaurant;
+        return Restaurant.builder()
+                .name(restaurantDto.getName())
+                .description(restaurantDto.getDescription())
+                .address(restaurantDto.getAddress())
+                .city(restaurantDto.getCity())
+                .state(restaurantDto.getState())
+                .zipCode(restaurantDto.getZipCode())
+                .cuisineType(restaurantDto.getCuisineType())
+                .ownerId(restaurantDto.getOwnerId())
+                .menuImageUrl(restaurantDto.getMenuImageUrl())
+                .created_at(restaurantDto.getCreated_at())
+                .updated_at(restaurantDto.getUpdated_at())
+                .build();
     }
 }
