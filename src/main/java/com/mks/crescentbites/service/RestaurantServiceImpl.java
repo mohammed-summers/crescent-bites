@@ -69,7 +69,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         return "Restaurant has been removed!!";
     }
 
-
     private RestaurantDto convertToDto(Restaurant restaurant) {
         return RestaurantDto.builder()
                 .name(restaurant.getName())
@@ -85,7 +84,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .updated_at(restaurant.getUpdated_at())
                 .build();
     }
-
 
     private Restaurant convertToEntity(RestaurantDto restaurantDto) {
         return Restaurant.builder()
