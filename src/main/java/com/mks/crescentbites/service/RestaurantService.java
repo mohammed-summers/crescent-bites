@@ -12,4 +12,5 @@ public interface RestaurantService {
     String addRestaurant(RestaurantDto restaurantDto);
     String updateRestaurant(RestaurantDto restaurantDto);
     String deleteRestaurant(String restaurantName);
+    List<RestaurantDto> filterRestaurants(String name, String cuisineType, String city, String state);
 }
