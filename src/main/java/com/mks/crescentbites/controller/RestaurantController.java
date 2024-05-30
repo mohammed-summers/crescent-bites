@@ -31,6 +31,15 @@ public class RestaurantController {
         return new ResponseEntity<>(restaurantByName, HttpStatus.OK);
     }
 
+    @GetMapping("/restaurants/filter")
+    public ResponseEntity<List<RestaurantDto>> filterRestaurants(@RequestParam(value = "name", required = false) String name,
+                                                                 @RequestParam(value = "cuisineType", required = false) String cuisineType,
+                                                                 @RequestParam(value = "city", required = false) String city,
+                                                                 @RequestParam(value = "state", required = false) String state) {
+        List<RestaurantDto> restaurantDtoList = restaurantService.filterRestaurants(name, cuisineType, city, state);
+        return new ResponseEntity<>(restaurantDtoList, HttpStatus.OK);
+    }
+
     @PostMapping("/restaurants")
     public ResponseEntity<String> addRestaurant(@Valid @RequestBody RestaurantDto restaurantDto) {
         String response = restaurantService.addRestaurant(restaurantDto);

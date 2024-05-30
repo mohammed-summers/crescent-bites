@@ -69,6 +69,11 @@ public class RestaurantServiceImpl implements RestaurantService {
         return "Restaurant has been removed!!";
     }
 
+    @Override
+    public List<RestaurantDto> filterRestaurants(String name, String cuisineType, String city, String state) {
+        return restaurantRepository.filterRestaurant(name, cuisineType, city, state).stream().map(this::convertToDto).toList();
+    }
+
     private RestaurantDto convertToDto(Restaurant restaurant) {
         return RestaurantDto.builder()
                 .name(restaurant.getName())
