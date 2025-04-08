@@ -10,14 +10,16 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
 @Transactional
 public class RestaurantServiceImpl implements RestaurantService {
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
     public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
