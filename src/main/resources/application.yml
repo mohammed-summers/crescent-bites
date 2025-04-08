@@ -12,3 +12,8 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/crescent-bites
