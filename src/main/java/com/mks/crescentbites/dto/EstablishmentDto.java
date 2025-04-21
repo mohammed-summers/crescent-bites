@@ -6,10 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Builder
-public class RestaurantDto {
+public class EstablishmentDto {
     @NotEmpty
     private String name;
     @NotEmpty
@@ -28,6 +30,6 @@ public class RestaurantDto {
     private int ownerId;
     @NotEmpty
     private String menuImageUrl;
-    private Timestamp created_at;
-    private Timestamp updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 }
