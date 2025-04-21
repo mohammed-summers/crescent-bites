@@ -3,7 +3,7 @@ spring:
     name: crescent-bites
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/halal_restaurant_db
+    url: jdbc:mysql://localhost:3306/crescent_bites
     username: ${MSQL_USERNAME}
     password: ${MSQL_PASSWORD}
   jpa:
