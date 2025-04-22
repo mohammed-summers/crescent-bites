@@ -2,15 +2,16 @@ package com.mks.crescentbites.entity;
 
 import com.mks.crescentbites.enums.EstablishmentType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "establishment")
 public class Establishment {
 
@@ -53,16 +54,16 @@ public class Establishment {
     private String halalCertification;
 
     @Column(name = "prayer_facility")
-    private Boolean prayerFacility = false;
-
-    @Column(name = "delivery_options")
-    private String deliveryOptions;
+    private Boolean prayerFacility;
 
     @Column(name = "operating_hours")
     private String operatingHours;
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name = "menu_image_url")
+    private String menuImageUrl;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

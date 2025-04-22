@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface EstablishmentRepository extends JpaRepository<Establishment, Integer> {
     Optional<Establishment> findEstablishmentByName(String name);
 
-    @Query("SELECT r FROM Restaurant r WHERE r.name = :name OR r.cuisineType = :cuisineType OR r.city = :city OR r.state = :state")
+//    TODO: improve search fields by using wild cards
+    @Query("SELECT r FROM Establishment r WHERE r.name = :name OR r.cuisineType = :cuisineType OR r.city = :city OR r.state = :state")
     List<Establishment> filterEstablishment(@Param("name") String name, @Param("cuisineType") String cuisineType, @Param("city") String city, @Param("state") String state);
 }
