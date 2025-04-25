@@ -46,21 +46,21 @@ public class EstablishmentController {
         return new ResponseEntity<>(establishmentDtoList, HttpStatus.OK);
     }
 
-    @PostMapping("/establishments")
+    @PostMapping("/admin/establishments")
     @Operation(summary = "Add an establishment", description = "Add an establishment given a valid establishmentDto")
     public ResponseEntity<String> addEstablishment(@Valid @RequestBody EstablishmentDto establishmentDto) {
         String response = establishmentService.addEstablishment(establishmentDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/establishment/{establishmentName}")
+    @PutMapping("/admin/establishment/{establishmentName}")
     @Operation(summary = "Update an establishment", description = "Update an establishment given a valid establishmentDto")
     public ResponseEntity<String> updateEstablishment(@Valid @RequestBody EstablishmentDto establishmentDto) {
         String response = establishmentService.updateEstablishment(establishmentDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/establishments/{establishmentName}")
+    @DeleteMapping("/admin/establishments/{establishmentName}")
     @Operation(summary = "Delete an establishment by name", description = "Deletes a establishment as per the name")
     public ResponseEntity<String> deleteEstablishment(@PathVariable("establishmentName") String establishmentName) {
         String response = establishmentService.deleteEstablishment(establishmentName);
